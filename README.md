@@ -200,3 +200,112 @@ So it becomes
 Yeah! My result is this:
 
 ![image](https://user-images.githubusercontent.com/10007806/111873463-3c96b780-8988-11eb-9cb2-4c5282edf1a4.png)
+
+All extenstions seem to be installed by default except for https://www.php.net/book.simplexml - not sure if I need to install it so I will just leave it for now.
+
+Now time to install Composer (https://getcomposer.org/download/)
+
+```
+root@debian:/var/www/html# php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+```
+```
+root@debian:/var/www/html# php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+Installer verified
+```
+```
+root@debian:/var/www/html# php composer-setup.php
+All settings correct for using Composer
+Downloading...
+
+Composer (version 2.0.11) successfully installed to: /var/www/html/composer.phar
+Use it: php composer.phar
+```
+```
+root@debian:/var/www/html# php -r "unlink('composer-setup.php');"
+```
+
+Now I may have missed that but it looks like Symfony is already installed:
+```
+root@debian:/var/www/html# symfony
+Symfony CLI version v4.23.2 (c) 2017-2021 Symfony SAS
+Symfony CLI helps developers manage projects, from local code to remote infrastructure
+
+These are common commands used in various situations:
+
+Work on a project locally
+
+  new                                                            Create a new Symfony project
+  serve                                                          Run a local web server
+  server:stop                                                    Stop the local web server
+  security:check                                                 Check security issues in project dependencies
+  composer                                                       Runs Composer without memory limit
+  console                                                        Runs the Symfony Console (bin/console) for current project
+  php, pecl, pear, php-fpm, php-cgi, php-config, phpdbg, phpize  Runs the named binary using the configured PHP version
+
+Manage a project on Cloud
+
+  login        Log in with your SymfonyConnect account
+  init         Initialize a new project using templates
+  link         Link current git repository to a SymfonyCloud project
+  projects     List active projects
+  envs         List environments
+  env:create   Create an environment
+  tunnel:open  Open SSH tunnels to the app's services
+  ssh          Open an SSH connection to the app container
+  deploy       Deploy an environment
+  domains      List domains
+  vars         List variables
+  user:add     Add a user to the project
+
+Show all commands with symfony help,
+Get help for a specific command with symfony help COMMAND.
+```
+
+I will also install Symfony CLI, although it says it is optional (https://symfony.com/download)
+
+```
+root@debian:/var/www/html# wget https://get.symfony.com/cli/installer -O - | bash
+--2021-03-20 15:38:27--  https://get.symfony.com/cli/installer
+Resolving get.symfony.com (get.symfony.com)... 13.32.168.25, 13.32.168.120, 13.32.168.5, ...
+Connecting to get.symfony.com (get.symfony.com)|13.32.168.25|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 6161 (6.0K) [text/x-shellscript]
+Saving to: ‘STDOUT’
+
+-                                 100%[===========================================================>]   6.02K  --.-KB/s    in 0s      
+
+2021-03-20 15:38:27 (59.6 MB/s) - written to stdout [6161/6161]
+
+Symfony CLI installer
+
+Environment check
+  [*] wget is installed
+  [*] Gzip is installed
+  [*] Git is installed
+  [*] Your architecture (amd64) is supported
+
+Download
+  Finding the latest version (platform: "linux_amd64")...
+  Downloading version 4.23.2 (https://github.com/symfony/cli/releases/download/v4.23.2/symfony_linux_amd64.gz)...
+/tmp/symfony-1616254707.gz        100%[===========================================================>]   7.70M  22.0MB/s    in 0.3s    
+  Uncompress binary...
+  Making the binary executable...
+  Installing the binary into your home directory...
+  The binary was saved to: /root/.symfony/bin/symfony
+
+The Symfony CLI v4.23.2 was installed successfully!
+
+Use it as a local file:
+  /root/.symfony/bin/symfony
+
+Or add the following line to your shell configuration file:
+  export PATH="$HOME/.symfony/bin:$PATH"
+
+Or install it globally on your system:
+  mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+
+Then start a new shell and run 'symfony'
+root@debian:/var/www/html# 
+root@debian:/var/www/html# mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+root@debian:/var/www/html# 
+```
